@@ -1,0 +1,40 @@
+# Makefile for Cocotb Reed-Solomon Decoder Tests with Waveforms
+
+# Default simulator
+SIM ?= icarus
+
+# Default top level
+TOPLEVEL ?= RS_decoder
+
+# Python test module
+MODULE ?= test_rs_decoder_cocotb
+
+# Verilog sources - use the rtl.f file list
+VERILOG_SOURCES = $(shell cat rtl.f | grep -v '^#' | grep -v '^$$')
+
+# Additional compile args for simulator
+COMPILE_ARGS += -g2012
+
+# Additional simulation args - generate VCD waveforms
+SIM_ARGS += 
+EXTRA_ARGS += +vcd
+
+# Waveform file name
+WAVES ?= rs_decoder_cocotb.vcd
+
+# Include cocotb's make rules
+include $(shell cocotb-config --makefiles)/Makefile.sim
+
+# Run with waveforms
+waves: clean
+	$(MAKE) SIM_ARGS="+vcd" EXTRA_ARGS="+vcd" MODULE=$(MODULE)
+
+# Clean target
+clean::
+	rm -rf __pycache__
+	rm -rf sim_build
+	rm -f results.xml
+	rm -f *.vcd
+	rm -f *.fst
+
+.PHONY: clean waves

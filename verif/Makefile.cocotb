@@ -1,0 +1,32 @@
+# Makefile for Cocotb Reed-Solomon Decoder Tests
+
+# Default simulator
+SIM ?= icarus
+
+# Default top level
+TOPLEVEL ?= RS_decoder
+
+# Python test module
+MODULE ?= test_rs_decoder_cocotb
+
+# Verilog sources - use the rtl.f file list
+VERILOG_SOURCES = $(shell cat rtl.f | grep -v '^#' | grep -v '^$$')
+
+# Additional compile args for simulator
+COMPILE_ARGS += 
+
+# Additional simulation args
+SIM_ARGS += 
+
+# Include cocotb's make rules
+include $(shell cocotb-config --makefiles)/Makefile.sim
+
+# Clean target
+clean::
+	rm -rf __pycache__
+	rm -rf sim_build
+	rm -f results.xml
+	rm -f *.vcd
+	rm -f *.fst
+
+.PHONY: clean

@@ -1,0 +1,17 @@
+# Makefile for GF multiplier comparison test
+SIM ?= icarus
+TOPLEVEL ?= gf_mult_no_lut
+MODULE ?= test_gf_comparison
+
+# Test the original design
+VERILOG_SOURCES = ../rs_gf/gf_mult_no_lut.v
+
+COMPILE_ARGS += -g2012
+SIM_ARGS += 
+
+include $(shell cocotb-config --makefiles)/Makefile.sim
+
+clean::
+	rm -rf __pycache__ sim_build results.xml *.vcd
+
+.PHONY: clean
