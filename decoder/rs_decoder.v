@@ -3,16 +3,6 @@
 //RS(197,194),each RS frame is 49.5 clocks, each clock has 32bits(4 byte symbols) input, can correct up to 2 bytes(symbols) error
 //made of 3 stages: syndrome calculation, error locator, error evaluator
 
-//TODO: Rs check list 
-// 1.Syndrome 1/2/3/4 blocks 
-// 2.0/1/2/3 errors 
-// 3.Errors on edge of blocks
-// 4.Valid input
-// 5.Error indication logic
-// 6.Update and work on documentation
-// 7.Publish code in github
-// 8.Verilog and python code cleanup
-// 9.Coctb full chip testbench
 module RS_decoder #(parameter SYMB_WIDTH = 8,
                     parameter T = 2
                     )

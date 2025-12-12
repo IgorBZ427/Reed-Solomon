@@ -1,11 +1,6 @@
 
 // RiBM(Reformulated inversionless Berlekamp-Massey) algorithm implementation in verilog, receives syndrome and outputs omega and sigma 
-//TODO: 
-//loops runs 5 times,gamma and k are vars
-//1.handle k when its negative
-//2.compile and test
 
-//compile command: iverilog -o waves rs_dec_bm_tb.v ../rs_gf/gf_poly_scale.v ../rs_gf/gf_poly_add.v ../rs_gf/gf_mult_no_lut.v ../rs_gf/gf_add.v rs_dec_bm.v
 module rs_dec_bm #(
     parameter SYMB_WIDTH = 8 ,  
     parameter T = 2 
@@ -132,57 +127,27 @@ module rs_dec_bm #(
     wire [SYMB_WIDTH-1:0] div_term;
     wire [SYMB_WIDTH-1:0] omega_terms[0:T-1];
     wire [SYMB_WIDTH-1:0] sigma_terms[0:T];
-    //assign div_term = delta[2*T][T+1];
     assign div_term = |delta[2*T][3*T+1] ?  delta[2*T][3*T+1] : //7
                       |delta[2*T][3*T]   ?  delta[2*T][3*T]   :  //6
                       |delta[2*T][3*T-1] ?  delta[2*T][3*T-1]   :  //5
                       |delta[2*T][2*T] ?  delta[2*T][2*T]   :  //4
                       |delta[2*T][2*T-1] ?  delta[2*T][2*T-1]  : delta[2*T][2*T-1];  //3
     assign bm_error = |delta[2*T][5] | |delta[2*T][6] | |delta[2*T][7];
-    wire [7:0] delta_4 = delta[2*T][4];
-    wire [7:0] delta_5 = delta[2*T][5];
-    wire [7:0] delta_6 = delta[2*T][6];
-    wire [7:0] delta_7 = delta[2*T][7];
-    /*
-    generate
-        for (i = 0; i < T; i = i + 1) begin: extract_omega
-            gf_div div_omega(
-                //.a(delta[2*T][T-1-i]), //0,1
-                .a(delta[2*T][i]), 
-                .b(div_term),
-                .result(omega_terms[i])
-            );
-            assign omega[SYMB_WIDTH*(i+1)-1:SYMB_WIDTH*i] = omega_terms[i];
-        end
-        
-        for (i = 0; i <= T; i = i + 1) begin: extract_sigma
-        gf_div div_omega(
-                .a(delta[2*T][T+i]), //2,3,4
-                .b(div_term),
-                .result(sigma_terms[i])
-            );
-            assign sigma[SYMB_WIDTH*(i+1)-1:SYMB_WIDTH*(i)] = sigma_terms[i];
-        end
-    endgenerate
-    */
 
 
     gf_div div_omega0(
-                //.a(delta[2*T][T-1-i]), //0,1
                 .a(delta[2*T][0]), 
                 .b(div_term),
                 .result(omega_terms[0])
             );
     
     gf_div div_omega1(
-                //.a(delta[2*T][T-1-i]), //0,1
                 .a(delta[2*T][1]), 
                 .b(div_term),
                 .result(omega_terms[1])
             );
 
     gf_div div_sigma0(
-                //.a(delta[2*T][T-1-i]), //0,1
                 .a(delta[2*T][2]), 
                 .b(div_term),
                 .result(sigma_terms[0])
@@ -190,14 +155,12 @@ module rs_dec_bm #(
 
 
     gf_div div_sigma1(
-                //.a(delta[2*T][T-1-i]), //0,1
                 .a(delta[2*T][3]), 
                 .b(div_term),
                 .result(sigma_terms[1])
     );
 
     gf_div div_sigma2(
-                //.a(delta[2*T][T-1-i]), //0,1
                 .a(delta[2*T][4]), 
                 .b(div_term),
                 .result(sigma_terms[2])

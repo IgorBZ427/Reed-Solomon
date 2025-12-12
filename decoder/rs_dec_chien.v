@@ -30,6 +30,7 @@ assign reversed_sigma = sigma;
 assign err_count = zero_count;
 genvar i;
 
+// Power of 2 values, for GF(2^8) with primitive polynomial x^8 + x^4 + x^3 + x^2 + 1
 assign pow_value[0] = 8'd1;
 assign pow_value[1] = 8'd2;
 assign pow_value[2] = 8'd4;
@@ -232,13 +233,6 @@ assign pow_value[197] = 8'd141;
 
 generate
   for (i = 0; i < NSYMB; i = i + 1) begin : eval_loop
-
-    // Power of 2 calculation
-    //gf_pow u_gf_pow_$i (
-    //  .index(i[7:0]),
-    //  .value(pow_value[i])
-    //);
-
     gf_poly_eval u_poly_eval_$i (
       .poly(reversed_sigma),
       .x(pow_value[i]),

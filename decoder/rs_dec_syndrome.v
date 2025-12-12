@@ -10,8 +10,6 @@ module rs_dec_syndrome #(
     input input_valid, // input valid signal
     input dec_align_in, // align input, used to toggle between frames
     input [SYMB_WIDTH*4-1:0] data_in,
-    //input [SYMB_WIDTH-1:0] multiplier,
-    //input [SYMB_WIDTH-1:0] syndrome_in,
     output reg [SYMB_WIDTH*4-1:0] syndrome_out
 );
 
