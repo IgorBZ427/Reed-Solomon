@@ -25,7 +25,7 @@ The design is motivated by USB4 Gen 2/3 RS-FEC requirements. The goal is a high-
 
 - Synthesizable RTL at **> 200 MHz** (FPGA/ASIC), verified with Yosys or equivalent
 - Encoder generates **4 parity bytes** per RS frame (194 data symbols)
-- Decoder returns validity indication within **5 clock cycles** after a full frame is received
+- Decoder returns validity indication within **3 clock cycles** after a full frame is received
 - Decoder corrects up to **2 symbol errors** and outputs error location + magnitude
 - `not_valid` flag for frames with more than 2 corrupted symbols (uncorrectable)
 - Python model used as POC and golden reference for RTL verification
