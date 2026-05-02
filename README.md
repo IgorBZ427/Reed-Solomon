@@ -1,6 +1,6 @@
 # Reed-Solomon FEC — RTL Implementation
 
-A synthesizable RTL implementation of a Reed-Solomon Forward Error Correction (FEC) encoder and decoder, targeting FPGA/ASIC, aligned to the **USB4 RS-FEC specification** (Appendix A.5.1).
+A synthesizable RTL implementation of a Reed-Solomon Forward Error Correction (FEC) encoder and decoder, targeting FPGA/ASIC, aligned to the **USB4 RS-FEC specification** (Appendix A.5.1). AI-assisted to some degree (see [below](#ai-assistance)).
 
 ---
 
@@ -13,6 +13,18 @@ Reed-Solomon (RS) codes are linear block codes widely used for error correction 
 - Symbols are 8-bit bytes; input arrives **4 symbols (32 bits) per clock cycle**
 - Generator polynomial: `g(x) = x⁴ + 15x³ + 54x² + 120x + 64`
 
+---
+## AI Models Used — Claude 3.7 Haiku, DeepSeek V2, ChatGPT 3.5
+
+## AI Assistance
+
+| Area | What I did | Where AI helped |
+|------|------------|-----------------|
+| **RS theory** | Studied references, understood the math | Filled gaps in my knowledge of RS coding theory |
+| **Python model** | Started from open-source code, modified it to fit RS(197,194) | Helped adapt and debug the model |
+| **RTL design** | Wrote most of the Verilog myself after validating the Python model | Assisted with the Berlekamp–Massey module |
+| **GF arithmetic** | Understood how GF arithmetic works | Implemented GF(2⁸) tables and multipliers; helped clarify GF operations and log/exp usage |
+| **Verilog TB** | Implemented simple TB to verify my code works | Implemented cocotb-based complex TB to verify the code can handle randoms |
 ---
 
 ## Why
